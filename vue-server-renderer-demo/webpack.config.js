@@ -1,10 +1,11 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
     entry: {
         "built-server-bundle":"./src/entry-server.js",
+        "built-client-bundle":"./src/entry-client.js",
     },
     output:{
         path: path.resolve(__dirname, 'dist'),
@@ -14,7 +15,7 @@ module.exports = {
         libraryExport:'default',
         globalObject: 'this'
     },
-    mode:"none",
+    mode:"development",
     module:{
         rules:[
             {
@@ -45,9 +46,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-          template: './src/template.html'
-        }),
+        // 此插件会把js文件通过script src的方式加到html中
+        // new HtmlWebpackPlugin({
+        //   template: './src/template.html'
+        // }),
         new VueLoaderPlugin()
     ]
 

@@ -1,14 +1,16 @@
 const path = require('path');
-const server = require('express')();
+const exp = require('express');
+const server = exp();
 
 const template = require('fs').readFileSync(path.resolve(__dirname,'src/template.html'), 'utf-8');
 
 const renderer = require('vue-server-renderer').createRenderer({
   template,
 });
-// const renderer = require('vue-server-renderer').createRenderer();
 
 const createApp = require('./dist/built-server-bundle.js')
+
+server.use('/', exp.static(__dirname + '/dist'))
 
 const context = { 
     title: 'vue ssr',
@@ -16,6 +18,7 @@ const context = {
         <meta name="keyword" content="vue,ssr">
         <meta name="description" content="vue srr demo">
     `,
+    jsurl:'/built-client-bundle.js'
 }
 
 server.get('*', (req, res) => {
